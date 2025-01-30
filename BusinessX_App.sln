@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessX_API", "BusinessX_API\BusinessX_API.csproj", "{EAE054F7-CCF4-4ADA-AB0C-05794F6F58A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business_Logic", "Business_Logic\Business_Logic.csproj", "{EC3E60E8-E358-4812-B92D-6504F79D9A0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessX_Data", "BusinessX_Data\BusinessX_Data.csproj", "{611E4FC9-251B-4CE4-AA50-05A962BA93FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAE054F7-CCF4-4ADA-AB0C-05794F6F58A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE054F7-CCF4-4ADA-AB0C-05794F6F58A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE054F7-CCF4-4ADA-AB0C-05794F6F58A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE054F7-CCF4-4ADA-AB0C-05794F6F58A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC3E60E8-E358-4812-B92D-6504F79D9A0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC3E60E8-E358-4812-B92D-6504F79D9A0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC3E60E8-E358-4812-B92D-6504F79D9A0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC3E60E8-E358-4812-B92D-6504F79D9A0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{611E4FC9-251B-4CE4-AA50-05A962BA93FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{611E4FC9-251B-4CE4-AA50-05A962BA93FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{611E4FC9-251B-4CE4-AA50-05A962BA93FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{611E4FC9-251B-4CE4-AA50-05A962BA93FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
