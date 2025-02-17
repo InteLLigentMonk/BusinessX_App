@@ -16,6 +16,24 @@ public abstract class BaseService<TEntity, TModel, TForm, TRepository> : IBaseSe
     {
         _repository = repository;
     }
+    public async Task<TModel> AddAsync(TForm form)
+    {
+        await _repository.BeginTransactionAsync();
+
+        try
+        {
+            var entity = CreateEntity(form);
+            var result = await _repository.CreateAsync(entity);
+            await _repository.SaveAsync();
+            await _repository.CommitTransactionAsync();
+            return CreateModel(result);
+        }
+        catch
+        {
+            await _repository.RollbackTransactionAsync();
+            return null!;
+        }
+    }
 
     public async Task<IEnumerable<TModel>> GetAllAsync()
     {
@@ -29,23 +47,41 @@ public abstract class BaseService<TEntity, TModel, TForm, TRepository> : IBaseSe
         return CreateModel(entity);
     }
 
-    public async Task<TModel> AddAsync(TForm form)
-    {
-        var entity = CreateEntity(form);
-        var result = await _repository.CreateAsync(entity);
-        return CreateModel(result);
-    }
-
     public async Task<TModel> UpdateAsync(Expression<Func<TEntity, bool>> expression, TModel model)
     {
-        var entity = CreateEntity(model);
-        var result = await _repository.UpdateAsync(expression, entity);
-        return CreateModel(result);
+        await _repository.BeginTransactionAsync();
+
+        try
+        {
+            var entity = CreateEntity(model);
+            var result = await _repository.UpdateAsync(expression, entity);
+            await _repository.SaveAsync();
+            await _repository.CommitTransactionAsync();
+            return CreateModel(result);
+        }
+        catch
+        {
+            await _repository.RollbackTransactionAsync();
+            return null!;
+        }
     }
 
     public async Task<bool> RemoveAsync(Expression<Func<TEntity, bool>> expression)
     {
-        return await _repository.DeleteAsync(expression);
+        await _repository.BeginTransactionAsync();
+
+        try
+        {
+            await _repository.DeleteAsync(expression);
+            await _repository.SaveAsync();
+            await _repository.CommitTransactionAsync();
+            return true;
+        }
+        catch
+        {
+            await _repository.RollbackTransactionAsync();
+            return false;
+        }
     }
 
     public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression)

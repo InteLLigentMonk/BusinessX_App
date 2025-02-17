@@ -5,6 +5,8 @@ using BusinessX_Data.Entities;
 using BusinessX_Data.Interfaces;
 using Business_Logic.Interfaces;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 
 namespace Business_Logic.Services;
@@ -14,6 +16,7 @@ public class CustomerService(ICustomerRepository repository) : BaseService<Custo
     protected override Customer CreateModel(CustomerEntity entity) => CustomerFactory.Create(entity);
     protected override CustomerEntity CreateEntity(CustomerRegistrationForm form) => CustomerFactory.Create(form);
     protected override CustomerEntity CreateEntity(Customer model) => CustomerFactory.Create(model);
+
 
 
     public async Task<Customer> GetCustomerWithProjectsAsync(Expression<Func<CustomerEntity, bool>> expression)

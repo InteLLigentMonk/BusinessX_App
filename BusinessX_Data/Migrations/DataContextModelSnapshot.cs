@@ -125,13 +125,11 @@ namespace BusinessX_Data.Migrations
                         .HasColumnType("integer")
                         .HasDefaultValueSql("nextval('\"ProjectIds\"')");
 
-                    b.Property<int?>("CustomerContactId")
+                    b.Property<int>("ContactId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("CustomerName")
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
@@ -166,7 +164,7 @@ namespace BusinessX_Data.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.HasIndex("CustomerName", "CustomerContactId");
+                    b.HasIndex("CustomerId", "ContactId");
 
                     b.ToTable("Projects");
                 });
@@ -252,7 +250,9 @@ namespace BusinessX_Data.Migrations
 
                     b.HasOne("BusinessX_Data.Entities.CustomerEntity", "Customer")
                         .WithMany("Projects")
-                        .HasForeignKey("CustomerName", "CustomerContactId");
+                        .HasForeignKey("CustomerId", "ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 

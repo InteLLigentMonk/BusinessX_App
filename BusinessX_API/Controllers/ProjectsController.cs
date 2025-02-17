@@ -22,9 +22,9 @@ namespace BusinessX_API.Controllers
 
         // GET: api/Projects/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Project>> GetProjectByName(string name)
+        public async Task<ActionResult<ProjectDetailsDto>> GetProjectById(int id)
         {
-            var project = await _service.GetAsync(c => c.Name == name);
+            var project = await _service.GetProjectWithDetailsAsync(c => c.Id == id);
 
             if (project == null)
             {
@@ -58,19 +58,19 @@ namespace BusinessX_API.Controllers
             }
             var createdProject = await _service.AddAsync(ProjectRegForm);
 
-            return CreatedAtAction(nameof(GetProjectByName), new { id = createdProject.Id }, createdProject);
+            return CreatedAtAction(nameof(GetProjectById), new { id = createdProject.Id }, createdProject);
         }
 
         // PUT: api/Projects/5
-        [HttpPut("{name}")]
-        public async Task<IActionResult> EditProjectAsync(Project updatedProject, string name)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditProjectAsync(Project updatedProject, int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var oldProject = await _service.GetAsync(c => c.Name == name);
+            var oldProject = await _service.GetAsync(c => c.Id == id);
 
             if (oldProject == null)
             {

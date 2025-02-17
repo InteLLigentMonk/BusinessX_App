@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BusinessX_Data.Entities;
 
-[PrimaryKey(nameof(Name), nameof(ContactId))]
 public class CustomerEntity
 {
     private string _name = null!;

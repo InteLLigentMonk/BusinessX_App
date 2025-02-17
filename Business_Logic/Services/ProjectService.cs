@@ -4,14 +4,20 @@ using Business_Logic.Models;
 using BusinessX_Data.Entities;
 using BusinessX_Data.Interfaces;
 using Business_Logic.Interfaces;
-using System.Linq.Expressions;
 using BusinessX_Data.Dtos;
+using System.Linq.Expressions;
 
 
 namespace Business_Logic.Services;
 
 public class ProjectService(IProjectRepository repository) : BaseService<ProjectEntity, Project, ProjectRegistrationForm, IProjectRepository>(repository), IProjectService
 {
+    public async Task<ProjectDetailsDto> GetProjectWithDetailsAsync(Expression<Func<ProjectEntity, bool>> expression)
+    {
+        var dto = await _repository.GetProjectWithDetailsAsync(expression);
+        return dto;
+    }
+
     public async Task<IEnumerable<RecentProjectsDto>> GetRecentAsync()
     {
         var entity = await _repository.GetRecentAsync();

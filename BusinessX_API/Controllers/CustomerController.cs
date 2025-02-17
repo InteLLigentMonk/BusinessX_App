@@ -76,7 +76,7 @@ namespace BusinessX_API.Controllers
                 return BadRequest();
             }
 
-            var customer = await _service.UpdateAsync(c => c.Slug == oldCustomer.Name, updatedCustomer);
+            var customer = await _service.UpdateAsync(c => c.Slug == oldCustomer.Slug, updatedCustomer);
             return Ok(customer);
 
         }

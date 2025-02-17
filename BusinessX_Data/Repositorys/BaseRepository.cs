@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using BusinessX_Data.Contexts;
 using BusinessX_Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace BusinessX_Data.Repositorys;
 
@@ -10,6 +11,38 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
 {
     private readonly DataContext _context = context;
     private readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
+    private IDbContextTransaction _transaction = null!;
+
+
+    #region Transaction Management
+    
+    public virtual async Task BeginTransactionAsync()
+    {
+        _transaction ??= await _context.Database.BeginTransactionAsync();
+    }
+
+    public virtual async Task CommitTransactionAsync()
+    {
+        if (_transaction != null){
+            await _transaction.CommitAsync();
+            await _transaction.DisposeAsync();
+            _transaction = null!;
+        }
+    }
+
+    public virtual async Task RollbackTransactionAsync()
+    {
+        if (_transaction != null)
+        {
+            await _transaction.RollbackAsync();
+            await _transaction.DisposeAsync();
+            _transaction = null!;
+        }
+    }
+
+    #endregion
+
+    #region CRUD Operations
 
     public virtual async Task<TEntity> CreateAsync(TEntity entity)
     {
@@ -19,7 +52,6 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
         try
         {
             await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
             return entity;
         }
         catch (Exception ex)
@@ -68,7 +100,6 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
                 return null!;
 
             _context.Entry(existingEntity).CurrentValues.SetValues(updatedEntity);
-            await _context.SaveChangesAsync();
             return existingEntity;
         }
         catch (Exception ex)
@@ -91,7 +122,6 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
                 return false;
 
             _dbSet.Remove(existingEntity);
-            await _context.SaveChangesAsync();
             return true;
 
         }
@@ -100,6 +130,13 @@ public abstract class BaseRepository<TEntity>(DataContext context) : IBaseReposi
             Debug.WriteLine($"Error deleting {nameof(TEntity)} entity :: {ex.Message}");
             return false;
         }
+    }
+
+    #endregion
+
+    public virtual async Task<int> SaveAsync()
+    {
+        return await _context.SaveChangesAsync();
     }
 
     public virtual Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression)

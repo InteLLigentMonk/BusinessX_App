@@ -23,6 +23,14 @@ public class DataContext(DbContextOptions<DataContext> options) : DbContext(opti
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<ProjectEntity>()
+            .HasOne(p => p.Customer)
+            .WithMany(c => c.Projects)
+            .HasForeignKey(p => new { p.CustomerId, p.ContactId });
+
+        modelBuilder.Entity<CustomerEntity>()
+            .HasKey(c => new { c.Name, c.ContactId });
+
         modelBuilder.HasSequence<int>("ProjectIds")
             .StartsAt(101)
             .IncrementsBy(1);

@@ -15,6 +15,7 @@ public class ProjectFactory
         EndDate = form.EndDate.ToUniversalTime(),
         StatusId = form.StatusId,
         CustomerId = form.CustomerId,
+        ContactId = form.ContactId,
         ServiceId = form.ServiceId,
         EmployeeId = form.EmployeeId
     };
@@ -28,6 +29,7 @@ public class ProjectFactory
         EndDate = entity.EndDate.ToUniversalTime(),
         StatusId = entity.StatusId,
         CustomerId = entity.CustomerId,
+        ContactId = entity.ContactId,
         ServiceId = entity.ServiceId,
         EmployeeId = entity.EmployeeId
     };
@@ -41,6 +43,7 @@ public class ProjectFactory
         EndDate = model.EndDate.ToUniversalTime(),
         StatusId = model.StatusId,
         CustomerId = model.CustomerId,
+        ContactId = model.ContactId,
         ServiceId = model.ServiceId,
         EmployeeId = model.EmployeeId
     };
