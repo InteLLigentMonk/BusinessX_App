@@ -40,6 +40,7 @@ import { Status } from "@/app/types/Status";
 import AddCustomerForm from "./AddCustomerForm";
 import AddServiceForm from "./AddServiceForm";
 import AddEmployeeForm from "./AddEmployeeForm";
+import StatusBadge from "./StatusBadge";
 
 interface AddProjectsFormProps {
   projectId?: string;
